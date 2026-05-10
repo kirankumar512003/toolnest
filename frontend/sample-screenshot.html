@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ToolNest – Sample UI</title>
+  <script>
+    try {
+      var t = localStorage.getItem('toolnest-sample-theme');
+      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    } catch (e) {}
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-elevated: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #f59e0b;
+      --accent-hover: #fbbf24;
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-elevated: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #d97706;
+      --accent-hover: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* Animated background – movable particles, grid, and blobs (inspired by Vercel/Stripe/Linear-style hero backgrounds) */
+    .bg-animated {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    /* Moving grid – subtle lines that drift */
+    .bg-grid {
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background-image:
+        linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 25s linear infinite;
+    }
+    [data-theme="light"] .bg-grid {
+      background-image:
+        linear-gradient(rgba(217, 119, 6, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217, 119, 6, 0.06) 1px, transparent 1px);
+    }
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(60px, 60px); }
+    }
+    /* Moving gradient orbs – clearly visible drift */
+    .bg-gradient {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse 70% 70% at 30% 20%, rgba(245, 158, 11, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 60% at 70% 70%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(245, 158, 11, 0.06) 0%, transparent 50%);
+      animation: gradientMove 20s ease-in-out infinite;
+    }
+    [data-theme="light"] .bg-gradient {
+      background:
+        radial-gradient(ellipse 70% 70% at 30% 20%, rgba(217, 119, 6, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 60% at 70% 70%, rgba(251, 191, 36, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(217, 119, 6, 0.04) 0%, transparent 50%);
+    }
+    @keyframes gradientMove {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(5%, 8%) scale(1.08); }
+      66% { transform: translate(-6%, -4%) scale(0.95); }
+    }
+    /* Large soft blobs – slow, visible movement */
+    .bg-orbs {
+      position: absolute;
+      inset: 0;
+    }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.5;
+      animation: blobFloat 24s ease-in-out infinite;
+    }
+    [data-theme="light"] .bg-orb { opacity: 0.35; }
+    .bg-orb:nth-child(1) {
+      width: 320px;
+      height: 320px;
+      background: rgba(245, 158, 11, 0.2);
+      top: 5%;
+      left: 5%;
+      animation-duration: 22s;
+      animation-delay: 0s;
+    }
+    .bg-orb:nth-child(2) {
+      width: 260px;
+      height: 260px;
+      background: rgba(251, 191, 36, 0.18);
+      top: 50%;
+      right: 5%;
+      animation-duration: 28s;
+      animation-delay: -7s;
+    }
+    .bg-orb:nth-child(3) {
+      width: 220px;
+      height: 220px;
+      background: rgba(245, 158, 11, 0.14);
+      bottom: 10%;
+      left: 25%;
+      animation-duration: 20s;
+      animation-delay: -14s;
+    }
+    .bg-orb:nth-child(4) {
+      width: 180px;
+      height: 180px;
+      background: rgba(251, 191, 36, 0.12);
+      top: 30%;
+      left: 50%;
+      animation-duration: 26s;
+      animation-delay: -3s;
+    }
+    @keyframes blobFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(60px, -80px) scale(1.1); }
+      50% { transform: translate(-80px, 40px) scale(0.9); }
+      75% { transform: translate(40px, 60px) scale(1.05); }
+    }
+    /* Floating particles – individual dots that move (like stars/dust) */
+    .bg-particles {
+      position: absolute;
+      inset: 0;
+    }
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(245, 158, 11, 0.35);
+      animation: particleMove 12s ease-in-out infinite;
+    }
+    .particle:nth-child(odd) { background: rgba(251, 191, 36, 0.3); }
+    [data-theme="light"] .particle { background: rgba(217, 119, 6, 0.4); }
+    [data-theme="light"] .particle:nth-child(odd) { background: rgba(180, 83, 9, 0.35); }
+    .particle:nth-child(3n) { width: 3px; height: 3px; animation-duration: 18s; }
+    .particle:nth-child(5n) { width: 2px; height: 2px; animation-duration: 14s; }
+    .particle:nth-child(1) { left: 10%; top: 15%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 25%; top: 80%; animation-delay: -2s; }
+    .particle:nth-child(3) { left: 45%; top: 25%; animation-delay: -4s; }
+    .particle:nth-child(4) { left: 70%; top: 60%; animation-delay: -1s; }
+    .particle:nth-child(5) { left: 85%; top: 20%; animation-delay: -6s; }
+    .particle:nth-child(6) { left: 15%; top: 50%; animation-delay: -3s; }
+    .particle:nth-child(7) { left: 55%; top: 75%; animation-delay: -5s; }
+    .particle:nth-child(8) { left: 90%; top: 45%; animation-delay: -2s; }
+    .particle:nth-child(9) { left: 35%; top: 10%; animation-delay: -8s; }
+    .particle:nth-child(10) { left: 5%; top: 70%; animation-delay: -1s; }
+    .particle:nth-child(11) { left: 60%; top: 40%; animation-delay: -4s; }
+    .particle:nth-child(12) { left: 80%; top: 85%; animation-delay: -7s; }
+    .particle:nth-child(13) { left: 20%; top: 35%; animation-delay: -3s; }
+    .particle:nth-child(14) { left: 95%; top: 55%; animation-delay: -5s; }
+    .particle:nth-child(15) { left: 40%; top: 90%; animation-delay: -2s; }
+    .particle:nth-child(16) { left: 75%; top: 15%; animation-delay: -6s; }
+    .particle:nth-child(17) { left: 8%; top: 40%; animation-delay: -9s; }
+    .particle:nth-child(18) { left: 50%; top: 55%; animation-delay: -1s; }
+    .particle:nth-child(19) { left: 92%; top: 75%; animation-delay: -4s; }
+    .particle:nth-child(20) { left: 30%; top: 65%; animation-delay: -7s; }
+    @keyframes particleMove {
+      0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+      25% { transform: translate(30px, -40px); opacity: 1; }
+      50% { transform: translate(-25px, 25px); opacity: 0.5; }
+      75% { transform: translate(20px, 35px); opacity: 0.9; }
+    }
+    .banner {
+      position: relative;
+      z-index: 1;
+      background: var(--border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.5rem 1rem;
+      text-align: center;
+    }
+    .banner a { color: var(--accent); text-decoration: none; }
+    .banner a:hover { text-decoration: underline; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(8px);
+    }
+    [data-theme="light"] .nav {
+      background: rgba(248, 250, 252, 0.95);
+    }
+    .nav-inner {
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav a {
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .nav a:hover { color: var(--accent); }
+    .nav .all-tools {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .nav .all-tools:hover { color: var(--text); }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(245, 158, 11, 0.08);
+    }
+    [data-theme="light"] .theme-toggle:hover {
+      background: rgba(217, 119, 6, 0.1);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 2rem;
+    }
+    .hero { margin-bottom: 2.5rem; }
+    .hero h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text);
+      letter-spacing: -0.025em;
+    }
+    .hero .tagline {
+      margin: 0.25rem 0 0;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .card {
+      display: block;
+      padding: 1rem 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    [data-theme="light"] .card:hover {
+      border-color: rgba(217, 119, 6, 0.5);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text);
+    }
+    .card p {
+      margin: 0.25rem 0 0;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .card .btn {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.875rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .card:hover .btn {
+      border-color: var(--accent);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    [data-theme="light"] .card:hover .btn {
+      background: rgba(217, 119, 6, 0.12);
+    }
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    footer .hint {
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-animated" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-gradient"></div>
+    <div class="bg-orbs">
+      <div class="bg-orb"></div>
+      <div class="bg-orb"></div>
+      <div class="bg-orb"></div>
+      <div class="bg-orb"></div>
+    </div>
+    <div class="bg-particles">
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+      <span class="particle"></span><span class="particle"></span>
+    </div>
+  </div>
+  <div class="banner">
+    Sample UI — This is a static preview. Run <code>npm run dev</code> in <code>frontend/</code> for the live app.
+  </div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#">ToolNest</a>
+      <div class="nav-links">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light theme">
+          <span id="theme-label">Light</span>
+        </button>
+        <a href="#" class="all-tools">All tools</a>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <header class="hero">
+      <h1>ToolNest</h1>
+      <p class="tagline">A cozy nest of essential developer tools.</p>
+    </header>
+    <section class="grid">
+      <a href="#jsonify" class="card" id="jsonify">
+        <h2>JSONify</h2>
+        <p>Format and validate JSON.</p>
+        <span class="btn">Open</span>
+      </a>
+      <a href="#diff" class="card" id="diff">
+        <h2>Diff Editor</h2>
+        <p>Compare text and code.</p>
+        <span class="btn">Open</span>
+      </a>
+      <a href="#encode" class="card" id="encode">
+        <h2>Cipher Lab</h2>
+        <p>Encode and decode text.</p>
+        <span class="btn">Open</span>
+      </a>
+      <a href="#time" class="card" id="time">
+        <h2>Time Forge</h2>
+        <p>Timestamp and date conversions.</p>
+        <span class="btn">Open</span>
+      </a>
+      <a href="#markdown" class="card" id="markdown">
+        <h2>MarkSmith</h2>
+        <p>Markdown editor.</p>
+        <span class="btn">Open</span>
+      </a>
+      <a href="#scratchpad" class="card" id="scratchpad">
+        <h2>Blank Space</h2>
+        <p>Distraction-free scratchpad.</p>
+        <span class="btn">Open</span>
+      </a>
+      <a href="#drawboard" class="card" id="drawboard">
+        <h2>Drawboard</h2>
+        <p>Infinite drawing canvas.</p>
+        <span class="btn">Open</span>
+      </a>
+    </section>
+    <footer>
+      Your everyday developer utilities. All tools run in your browser.
+      <p class="hint">Open this file in a browser (double-click or drag into Chrome/Firefox/Safari) to view the sample UI.</p>
+    </footer>
+  </main>
+  <script>
+    (function() {
+      var STORAGE_KEY = 'toolnest-sample-theme';
+      var doc = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      var label = document.getElementById('theme-label');
+      function getTheme() {
+        try { return localStorage.getItem(STORAGE_KEY) || 'dark'; } catch (e) { return 'dark'; }
+      }
+      function setTheme(theme) {
+        doc.setAttribute('data-theme', theme);
+        if (label) label.textContent = theme === 'dark' ? 'Light' : 'Dark';
+        try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
+      }
+      setTheme(getTheme());
+      if (btn) btn.addEventListener('click', function() {
+        var next = doc.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+    })();
+  </script>
+</body>
+</html>

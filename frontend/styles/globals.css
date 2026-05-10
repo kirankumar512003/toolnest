@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme="dark"] {
+  --bg: #070914;
+  --bg-2: #0b1020;
+  --bg-elevated: rgba(17, 24, 39, 0.8);
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #f59e0b;
+  --accent-hover: #fbbf24;
+  --glass: rgba(15, 23, 42, 0.55);
+  --glass-2: rgba(15, 23, 42, 0.35);
+}
+
+[data-theme="light"] {
+  --bg: #f5f7fa;
+  --bg-2: #edf0f5;
+  --bg-elevated: #ffffff;
+  --border: #d0d7de;
+  --text: #1c2128;
+  --text-muted: #57606a;
+  --accent: #d97706;
+  --accent-hover: #b45309;
+  --glass: rgba(245, 247, 250, 0.85);
+  --glass-2: rgba(245, 247, 250, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Background primitives used by AtmosBackground */
+.atmos-blob {
+  position: absolute;
+  width: 52rem;
+  height: 52rem;
+  filter: blur(40px);
+  border-radius: 9999px;
+  opacity: 0.45;
+  transform: translateZ(0);
+}
+
+.atmos-blob-a {
+  left: 6%;
+  top: 8%;
+  background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.75), rgba(245, 158, 11, 0) 62%);
+  animation: atmosFloatA 16s ease-in-out infinite;
+}
+
+.atmos-blob-b {
+  right: 2%;
+  top: 18%;
+  width: 46rem;
+  height: 46rem;
+  background: radial-gradient(circle at 35% 35%, rgba(59, 130, 246, 0.7), rgba(59, 130, 246, 0) 62%);
+  animation: atmosFloatB 18s ease-in-out infinite;
+}
+
+.atmos-blob-c {
+  left: 26%;
+  bottom: -8%;
+  width: 58rem;
+  height: 58rem;
+  background: radial-gradient(circle at 35% 35%, rgba(236, 72, 153, 0.55), rgba(236, 72, 153, 0) 62%);
+  animation: atmosFloatC 22s ease-in-out infinite;
+}
+
+.atmos-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+@keyframes atmosFloatA {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(32px, -22px, 0) scale(1.06); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes atmosFloatB {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-28px, 18px, 0) scale(1.05); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes atmosFloatC {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(16px, 26px, 0) scale(1.04); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Optional: monospace for code-like feel in places */
+.font-mono {
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
+}
+
+/* Markdown preview dark theme */
+.markdown-preview.prose h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+.markdown-preview.prose h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+.markdown-preview.prose h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+.markdown-preview.prose p {
+  margin: 0 0 0.75rem;
+  color: var(--text);
+}
+.markdown-preview.prose strong {
+  font-weight: 700;
+  color: var(--text);
+}
+.markdown-preview.prose em {
+  font-style: italic;
+}
+.markdown-preview.prose ul {
+  margin: 0 0 0.75rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+.markdown-preview.prose li {
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+.markdown-preview.prose code {
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  font-size: 0.875em;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
+.markdown-preview.prose pre {
+  margin: 0 0 0.75rem;
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.markdown-preview.prose pre code {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text);
+}
+.markdown-preview.prose blockquote {
+  margin: 0 0 0.75rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--border);
+  color: var(--text-muted);
+}
+.markdown-preview.prose a {
+  color: var(--accent);
+}
+.markdown-preview.prose hr {
+  margin: 1rem 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* Dark mode scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
