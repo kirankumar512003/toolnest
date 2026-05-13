@@ -42,3 +42,21 @@ export function runUrlDecode(input: string): Result<string> {
     return { ok: false, error: msg };
   }
 }
+
+export function runHtmlEncode(input: string): string {
+  if (!input) return '';
+  const entities: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return input.replace(/[&<>"']/g, (s) => entities[s]);
+}
+
+export function runHtmlDecode(input: string): string {
+  if (!input) return '';
+  const doc = new DOMParser().parseFromString(input, 'text/html');
+  return doc.documentElement.textContent || '';
+}

@@ -5,7 +5,7 @@ env/
 venv/
 ENV/
 bin/
-lib/
+# lib/ (Removed to allow frontend/lib to be tracked)
 develop-eggs/
 dist/
 downloads/
