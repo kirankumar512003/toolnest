@@ -101,26 +101,42 @@ function getIconForTool(toolId: ToolId) {
 
 export default function SideNav() {
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-16 border-r border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur z-50 flex flex-col items-center py-4">
-      <Link href="/" className="mb-8 block p-1" title="ToolNest Home">
-        <img src="/logo.png" alt="ToolNest" className="w-12 h-12 rounded-full object-cover border border-[var(--border)] shadow-lg" />
-      </Link>
-      
-      <nav className="flex flex-col gap-4">
-        {TOOLS.map((tool) => (
+    <>
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-16 border-r border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur z-50 flex-col items-center py-6">
+        <Link href="/" className="mb-8 block p-1 transition-transform hover:scale-105" title="ToolNest Home">
+          <img src="/logo.png" alt="ToolNest" className="w-10 h-10 rounded-full object-cover border border-[var(--border)] shadow-xl" />
+        </Link>
+        
+        <nav className="flex flex-col gap-5">
+          {TOOLS.map((tool) => (
+            <Link
+              key={tool.id}
+              href={tool.href}
+              className="group relative p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all"
+            >
+              {getIconForTool(tool.id)}
+              <div className="absolute left-14 top-1/2 -translate-y-1/2 rounded-md bg-[var(--bg-elevated)] border border-[var(--border)] px-3 py-1.5 text-xs font-semibold text-[var(--text)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-2xl z-[100]">
+                {tool.name}
+              </div>
+            </Link>
+          ))}
+        </nav>
+      </aside>
+
+      {/* Mobile Bottom Nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 border-t border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur-xl z-50 flex items-center justify-around px-2">
+        {TOOLS.slice(0, 5).map((tool) => (
           <Link
             key={tool.id}
             href={tool.href}
-            className="group relative p-2.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent)] hover:bg-[var(--accent)]/10 transition-colors"
+            className="flex flex-col items-center gap-1 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors px-2 py-1"
           >
             {getIconForTool(tool.id)}
-            {/* Tooltip */}
-            <div className="absolute left-14 top-1/2 -translate-y-1/2 rounded bg-[var(--bg-elevated)] border border-[var(--border)] px-2 py-1 text-xs font-medium text-[var(--text)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50 shadow-lg">
-              {tool.name}
-            </div>
+            <span className="text-[10px] font-medium uppercase tracking-tight">{tool.name.split(' ')[0]}</span>
           </Link>
         ))}
       </nav>
-    </aside>
+    </>
   );
 }
