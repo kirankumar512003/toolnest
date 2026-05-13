@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Layout from '@/components/Layout';
-import DiffEditorTool from '@/components/diff/DiffEditorTool';
-import { TabbedToolViewer } from '@/components/ui';
+import Layout from '../../components/Layout';
+import DiffEditorTool from '../../components/diff/DiffEditorTool';
+import { TabbedToolViewer } from '../../components/ui';
 
 export default function DiffPage() {
   return (

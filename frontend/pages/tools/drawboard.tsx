@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import DrawboardTool from '@/components/drawboard/DrawboardTool';
+import DrawboardTool from '../../components/drawboard/DrawboardTool';
 
 export default function DrawboardPage() {
   return (

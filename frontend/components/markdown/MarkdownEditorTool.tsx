@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { marked } from 'marked';
 import EditorWithLineNumbers from './EditorWithLineNumbers';
 import MarkdownPreview from './MarkdownPreview';
-import { SectionLabel } from '@/components/ui';
+import { SectionLabel } from '../ui';
 
 export default function MarkdownEditorTool() {
   const [markdown, setMarkdown] = useState('');

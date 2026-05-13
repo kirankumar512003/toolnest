@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { ToolMessage } from '@/types';
+import type { ToolMessage } from '../types';
 
 export function useToolMessage(): [
   ToolMessage | null,

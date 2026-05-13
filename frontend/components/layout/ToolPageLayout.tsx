@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import SideNav from './SideNav';
-import AtmosBackground from '@/components/AtmosBackground';
+import AtmosBackground from '../AtmosBackground';
 
 interface ToolPageLayoutProps {
   /** Page title; when omitted, no h1 is rendered */

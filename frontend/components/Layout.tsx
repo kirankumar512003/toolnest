@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import ToolPageLayout from '@/components/layout/ToolPageLayout';
+import ToolPageLayout from './layout/ToolPageLayout';
 
 interface LayoutProps {
   children: ReactNode;

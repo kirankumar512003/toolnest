@@ -1,4 +1,4 @@
-import type { ToolMessage } from '@/types';
+import type { ToolMessage } from '../../types';
 
 interface MessageProps {
   message: ToolMessage | null;

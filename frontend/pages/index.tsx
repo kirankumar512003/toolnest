@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import SideNav from '@/components/layout/SideNav';
-import AtmosBackground from '@/components/AtmosBackground';
-import ToolCard from '@/components/ToolCard';
-import { TOOLS } from '@/utils/tools';
+import SideNav from '../components/layout/SideNav';
+import AtmosBackground from '../components/AtmosBackground';
+import ToolCard from '../components/ToolCard';
+import { TOOLS } from '../utils/tools';
 
 export default function Home() {
   return (

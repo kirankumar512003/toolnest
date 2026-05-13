@@ -1,4 +1,4 @@
-import type { Result } from '@/types';
+import type { Result } from '../types';
 
 const EPOCH_MS_MAX = 1e12;
 

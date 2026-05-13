@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Layout from '@/components/Layout';
-import PdfStudio from '@/components/pdf/PdfStudio';
-import { TabbedToolViewer } from '@/components/ui';
+import Layout from '../../components/Layout';
+import PdfStudio from '../../components/pdf/PdfStudio';
+import { TabbedToolViewer } from '../../components/ui';
 
 export default function PdfStudioPage() {
   return (

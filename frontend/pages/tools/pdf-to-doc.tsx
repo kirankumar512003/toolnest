@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Layout from '@/components/Layout';
-import PdfToDocTool from '@/components/pdf/PdfToDocTool';
-import { TabbedToolViewer } from '@/components/ui';
+import Layout from '../../components/Layout';
+import PdfToDocTool from '../../components/pdf/PdfToDocTool';
+import { TabbedToolViewer } from '../../components/ui';
 
 export default function PdfToDocPage() {
   return (

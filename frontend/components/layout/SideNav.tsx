@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { TOOLS } from '@/utils/tools';
-import type { ToolId } from '@/utils/tools';
+import { TOOLS } from '../../utils/tools';
+import type { ToolId } from '../../utils/tools';
 
 function getIconForTool(toolId: ToolId) {
   switch (toolId) {

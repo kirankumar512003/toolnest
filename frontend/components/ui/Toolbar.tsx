@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Message from './Message';
-import type { ToolMessage } from '@/types';
+import type { ToolMessage } from '../../types';
 
 interface ToolbarProps {
   children: ReactNode;

@@ -1,4 +1,4 @@
-import type { Result } from '@/types';
+import type { Result } from '../types';
 
 export function tryParseJson(str: string): Result<unknown> {
   if (str.trim() === '') {

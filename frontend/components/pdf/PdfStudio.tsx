@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { Button, SectionLabel, SplitPanel } from '@/components/ui';
-import CodeEditor from '@/components/CodeEditor';
+import { Button, SectionLabel, SplitPanel } from '../ui';
+import CodeEditor from '../CodeEditor';
 
 type StudioMode = 'merge' | 'extract';
 

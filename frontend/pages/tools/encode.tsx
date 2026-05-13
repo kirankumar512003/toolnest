@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Layout from '@/components/Layout';
-import EncodeTool from '@/components/encode/EncodeTool';
-import { TabbedToolViewer } from '@/components/ui';
+import Layout from '../../components/Layout';
+import EncodeTool from '../../components/encode/EncodeTool';
+import { TabbedToolViewer } from '../../components/ui';
 
 export default function EncodePage() {
   return (

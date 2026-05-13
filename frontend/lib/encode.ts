@@ -1,4 +1,4 @@
-import type { Result } from '@/types';
+import type { Result } from '../types';
 
 export function runBase64Encode(input: string): Result<string> {
   if (input === '') {

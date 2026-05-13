@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import Layout from '@/components/Layout';
-import PdfMergeTool from '@/components/pdf/PdfMergeTool';
-import { TabbedToolViewer } from '@/components/ui';
+import Layout from '../../components/Layout';
+import PdfMergeTool from '../../components/pdf/PdfMergeTool';
+import { TabbedToolViewer } from '../../components/ui';
 
 export default function PdfMergePage() {
   return (

@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import CodeEditor from '@/components/CodeEditor';
-import { SplitPanel, SectionLabel } from '@/components/ui';
+import CodeEditor from '../CodeEditor';
+import { SplitPanel, SectionLabel } from '../ui';
 
 const MonacoDiffEditor = dynamic(
   () => import('@monaco-editor/react').then((mod) => mod.DiffEditor),
