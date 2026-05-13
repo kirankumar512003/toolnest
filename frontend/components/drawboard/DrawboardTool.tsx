@@ -3,8 +3,8 @@
 import { useRef, useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Button } from '@/components/ui';
-import { downloadBlob } from '@/lib/file';
+import { Button } from '../ui';
+import { downloadBlob } from '../../lib/file';
 
 const Excalidraw = dynamic(
   () => import('@excalidraw/excalidraw').then((mod) => mod.Excalidraw),
