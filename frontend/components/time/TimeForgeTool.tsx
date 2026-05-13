@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useCallback, useMemo } from 'react';
-import CodeEditor from '@/components/CodeEditor';
-import { Button, Toolbar, SplitPanel, SectionLabel } from '@/components/ui';
-import { useToolMessage } from '@/hooks';
-import { parseTimestampInput, formatTimestampResult } from '@/lib/time';
+import CodeEditor from '../CodeEditor';
+import { Button, Toolbar, SplitPanel, SectionLabel } from '../ui';
+import { useToolMessage } from '../../hooks';
+import { parseTimestampInput, formatTimestampResult } from '../../lib/time';
 
 interface FormatRowProps {
   label: string;

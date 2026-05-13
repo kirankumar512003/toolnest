@@ -1,14 +1,14 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import CodeEditor from '@/components/CodeEditor';
-import { Button, Toolbar, SplitPanel, SectionLabel } from '@/components/ui';
-import { useToolMessage } from '@/hooks';
+import CodeEditor from '../CodeEditor';
+import { Button, Toolbar, SplitPanel, SectionLabel } from '../ui';
+import { useToolMessage } from '../../hooks';
 import { 
   runBase64Encode, runBase64Decode,
   runUrlEncode, runUrlDecode,
   runHtmlEncode, runHtmlDecode
-} from '@/lib/encode';
+} from '../../lib/encode';
 
 export default function EncodeTool() {
   const [input, setInput] = useState('');

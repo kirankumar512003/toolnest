@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import CodeEditor from '@/components/CodeEditor';
-import { Button, Toolbar, SplitPanel } from '@/components/ui';
-import { useToolMessage } from '@/hooks';
-import { tryParseJson } from '@/lib/jsonify';
+import CodeEditor from '../CodeEditor';
+import { Button, Toolbar, SplitPanel } from '../ui';
+import { useToolMessage } from '../../hooks';
+import { tryParseJson } from '../../lib/jsonify';
 
 export default function JsonifyTool() {
   const [input, setInput] = useState('');
