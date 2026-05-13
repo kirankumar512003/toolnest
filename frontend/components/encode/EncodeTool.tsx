@@ -2,13 +2,12 @@
 
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/CodeEditor';
-import { Button, Toolbar, SplitPanel } from '@/components/ui';
+import { Button, Toolbar, SplitPanel, SectionLabel } from '@/components/ui';
 import { useToolMessage } from '@/hooks';
-import {
-  runBase64Encode,
-  runBase64Decode,
-  runUrlEncode,
-  runUrlDecode,
+import { 
+  runBase64Encode, runBase64Decode,
+  runUrlEncode, runUrlDecode,
+  runHtmlEncode, runHtmlDecode
 } from '@/lib/encode';
 
 export default function EncodeTool() {
