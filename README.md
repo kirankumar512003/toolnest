@@ -19,9 +19,9 @@ ToolNest is a cozy, production-grade nest of developer utilities. Instead of hun
 ##  The Tool Suite
 
 ###  Text & Code
-- **MarkSmith:** A premium Markdown editor with side-by-side preview and ghost-gutter line numbers.
+- **MarkSmith:** A premium Markdown editor with side-by-side preview, ghost-gutter line numbers, and a **Professional Export Hub** (Selectable-Text PDF & native Word .doc).
 - **JSONify:** Format, validate, and beautify messy JSON strings instantly.
-- **Diff Editor:** Professional-grade text comparison to find subtle changes between code or text.
+- **Diff Editor:** High-Performance, "Pro" comparison engine using the `diff-match-patch` algorithm to handle massive files with zero lag.
 - **Cipher Lab:** Encode/Decode anything (Base64, URL, HTML) with zero network calls.
 - **Blank Space:** A distraction-free, auto-saving scratchpad for your thoughts.
 
@@ -65,6 +65,10 @@ npm run dev
 
 ##  Architecture
 - **Frontend:** Next.js 14, React 18, Tailwind CSS, TypeScript.
+- **Key Libraries:** 
+  - `diff-match-patch`: High-speed text comparison.
+  - `jspdf` & `html2pdf.js`: Professional document generation.
+  - `monaco-editor`: Core code editing experience.
 - **Backend:** FastAPI (Python), pypdf, pdfplumber, pypdfium2.
 - **Deployment:** Ready for Vercel (Frontend) and Render/Railway (Backend).
 
