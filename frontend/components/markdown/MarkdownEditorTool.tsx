@@ -74,19 +74,56 @@ export default function MarkdownEditorTool() {
     };
   }, [onMouseMove, onMouseUp]);
 
-  const downloadPdf = () => {
-    if (!previewContainerRef.current || !html2pdf) return;
+  const downloadPdf = async () => {
+    if (!previewContainerRef.current) return;
     
-    const element = previewContainerRef.current;
-    const opt = {
-      margin: 1,
-      filename: 'document.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
+    // Dynamically import jsPDF to avoid SSR issues
+    const { jsPDF } = await import('jspdf');
+    const doc = new jsPDF({
+      orientation: 'p',
+      unit: 'pt',
+      format: 'a4',
+    });
 
-    html2pdf().set(opt).from(element).save();
+    // We want a clean white background for the PDF even in dark mode
+    const content = previewContainerRef.current.cloneNode(true) as HTMLElement;
+    content.style.width = '550pt'; // Adjust for A4 width
+    content.style.backgroundColor = 'white';
+    content.style.color = 'black';
+    content.style.padding = '40pt';
+    content.style.height = 'auto';
+    content.style.overflow = 'visible';
+    
+    // Fix all children text color for visibility
+    const all = content.getElementsByTagName('*');
+    for (let i = 0; i < all.length; i++) {
+      (all[i] as HTMLElement).style.color = 'black';
+      (all[i] as HTMLElement).style.borderColor = '#eee';
+    }
+
+    // Add to body temporarily but hidden
+    content.style.position = 'fixed';
+    content.style.left = '-9999px';
+    content.style.top = '0';
+    document.body.appendChild(content);
+
+    try {
+      await doc.html(content, {
+        callback: function (doc) {
+          doc.save('document.pdf');
+        },
+        margin: [40, 40, 40, 40],
+        autoPaging: 'text',
+        x: 0,
+        y: 0,
+        width: 550, // Width of the content in the PDF
+        windowWidth: 550, // Width of the virtual window
+      });
+    } catch (err) {
+      console.error('PDF generation failed:', err);
+    } finally {
+      document.body.removeChild(content);
+    }
   };
 
   const downloadDoc = () => {
