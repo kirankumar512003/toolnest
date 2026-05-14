@@ -89,7 +89,7 @@ export default function DiffEditorTool() {
               isProcessing ? 'opacity-50 cursor-not-allowed' : 'hover:brightness-110 active:scale-95'
             }`}
           >
-            {isProcessing ? 'Processing...' : 'Run Review Comparison'}
+            {isProcessing ? 'Comparing...' : 'Compare'}
           </button>
           <button
             onClick={handleClear}
