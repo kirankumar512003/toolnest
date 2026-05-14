@@ -10,7 +10,7 @@ export default function MarkdownPage() {
         <title>MarkSmith – ToolNest</title>
         <meta name="description" content="Edit and preview Markdown in real time." />
       </Head>
-      <Layout title="MarkSmith">
+      <Layout title={undefined}>
         <TabbedToolViewer toolComponent={MarkdownEditorTool} tabPrefix="Doc" />
       </Layout>
     </>

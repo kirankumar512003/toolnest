@@ -3,6 +3,7 @@ import SideNav from '../components/layout/SideNav';
 import AtmosBackground from '../components/AtmosBackground';
 import ToolCard from '../components/ToolCard';
 import { TOOLS } from '../utils/tools';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Home() {
   return (
@@ -18,7 +19,11 @@ export default function Home() {
       <div className="flex min-h-screen text-[var(--text)]">
         <AtmosBackground />
         <SideNav />
-        <div className="flex-1 ml-16 overflow-y-auto">
+        <div className="flex-1 md:ml-16 overflow-y-auto">
+          {/* Top Header Row for Home Page Toggle */}
+          <div className="fixed top-6 right-6 z-50">
+            <ThemeToggle />
+          </div>
           <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-16">
 
             <header className="mb-24 mt-16 flex flex-col items-center text-center">

@@ -14,6 +14,8 @@ export default function MarkdownEditorTool() {
   const isDragging = useRef(false);
   const [splitPct, setSplitPct] = useState(50);
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const parse = async () => {
       if (!markdown.trim()) { setHtml(''); return; }
@@ -22,6 +24,20 @@ export default function MarkdownEditorTool() {
     };
     parse();
   }, [markdown]);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      setMarkdown(content);
+    };
+    reader.readAsText(file);
+    // Reset input so the same file can be uploaded again if needed
+    e.target.value = '';
+  };
 
   const onMouseDown = useCallback(() => {
     isDragging.current = true;
@@ -53,20 +69,49 @@ export default function MarkdownEditorTool() {
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      {/* Mobile Toggle */}
-      <div className="flex md:hidden mb-4 p-1 bg-[var(--bg-2)] rounded-xl border border-[var(--border)]">
-        <button
-          onClick={() => setView('edit')}
-          className={`flex-1 py-2 px-4 text-sm font-semibold rounded-lg transition-all ${view === 'edit' ? 'bg-[var(--accent)] text-white shadow-lg' : 'text-[var(--text-muted)]'}`}
-        >
-          Editor
-        </button>
-        <button
-          onClick={() => setView('preview')}
-          className={`flex-1 py-2 px-4 text-sm font-semibold rounded-lg transition-all ${view === 'preview' ? 'bg-[var(--accent)] text-white shadow-lg' : 'text-[var(--text-muted)]'}`}
-        >
-          Preview
-        </button>
+      {/* Hidden File Input */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileUpload}
+        accept=".md,.txt,.markdown"
+        className="hidden"
+      />
+
+      <div className="flex items-center mb-4 gap-4 px-2">
+        {/* Pro Action Row on the Left */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            title="Import Markdown File"
+            className="flex items-center justify-center w-9 h-9 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all shadow-sm group"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+          </button>
+          <button
+            onClick={() => setMarkdown('')}
+            title="Clear Editor"
+            className="flex items-center justify-center w-9 h-9 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-muted)] hover:border-red-500/50 hover:text-red-400 transition-all shadow-sm group"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:rotate-12 transition-transform"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          </button>
+        </div>
+
+        {/* Mobile Toggle */}
+        <div className="flex md:hidden p-1 bg-[var(--bg-2)] rounded-xl border border-[var(--border)] ml-auto">
+          <button
+            onClick={() => setView('edit')}
+            className={`flex-1 py-1.5 px-4 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all ${view === 'edit' ? 'bg-[var(--accent)] text-white shadow-lg' : 'text-[var(--text-muted)]'}`}
+          >
+            Editor
+          </button>
+          <button
+            onClick={() => setView('preview')}
+            className={`flex-1 py-1.5 px-4 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all ${view === 'preview' ? 'bg-[var(--accent)] text-white shadow-lg' : 'text-[var(--text-muted)]'}`}
+          >
+            Preview
+          </button>
+        </div>
       </div>
 
       <div ref={containerRef} className="tool-viewport flex flex-1 min-h-0">

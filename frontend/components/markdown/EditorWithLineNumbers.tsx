@@ -9,9 +9,9 @@ interface EditorWithLineNumbersProps {
   className?: string;
 }
 
-const LINE_HEIGHT = 20;
-const PADDING_X = 12;
-const PADDING_Y = 10;
+const LINE_HEIGHT = 24;
+const PADDING_X = 16;
+const PADDING_Y = 16;
 
 export default function EditorWithLineNumbers({
   value,
@@ -90,7 +90,7 @@ export default function EditorWithLineNumbers({
         onScroll={handleScroll}
         placeholder={placeholder}
         spellCheck={false}
-        className="flex-1 min-w-0 resize-none bg-transparent pl-3 pr-3 font-mono text-sm text-[var(--text)] placeholder-[var(--text-muted)]/40 caret-[var(--accent)] focus:outline-none overflow-auto"
+        className="flex-1 min-w-0 resize-none bg-transparent pl-4 pr-4 font-mono text-sm text-[var(--text)] placeholder-[var(--text-muted)]/40 caret-[var(--accent)] focus:outline-none overflow-auto"
         style={{
           lineHeight: `${LINE_HEIGHT}px`,
           paddingTop: PADDING_Y,
