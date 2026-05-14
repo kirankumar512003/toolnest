@@ -77,53 +77,67 @@ export default function MarkdownEditorTool() {
   const downloadPdf = async () => {
     if (!previewContainerRef.current) return;
     
-    // Dynamically import jsPDF to avoid SSR issues
-    const { jsPDF } = await import('jspdf');
-    const doc = new jsPDF({
-      orientation: 'p',
-      unit: 'pt',
-      format: 'a4',
-    });
+    const contentHtml = previewContainerRef.current.innerHTML;
 
-    // We want a clean white background for the PDF even in dark mode
-    const content = previewContainerRef.current.cloneNode(true) as HTMLElement;
-    content.style.width = '550pt'; // Adjust for A4 width
-    content.style.backgroundColor = 'white';
-    content.style.color = 'black';
-    content.style.padding = '40pt';
-    content.style.height = 'auto';
-    content.style.overflow = 'visible';
-    
-    // Fix all children text color for visibility
-    const all = content.getElementsByTagName('*');
-    for (let i = 0; i < all.length; i++) {
-      (all[i] as HTMLElement).style.color = 'black';
-      (all[i] as HTMLElement).style.borderColor = '#eee';
+    // Open a dedicated Export Window for perfect rendering
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert('Please allow popups to export PDF');
+      return;
     }
 
-    // Add to body temporarily but hidden
-    content.style.position = 'fixed';
-    content.style.left = '-9999px';
-    content.style.top = '0';
-    document.body.appendChild(content);
-
-    try {
-      await doc.html(content, {
-        callback: function (doc) {
-          doc.save('document.pdf');
-        },
-        margin: [40, 40, 40, 40],
-        autoPaging: 'text',
-        x: 0,
-        y: 0,
-        width: 550, // Width of the content in the PDF
-        windowWidth: 550, // Width of the virtual window
-      });
-    } catch (err) {
-      console.error('PDF generation failed:', err);
-    } finally {
-      document.body.removeChild(content);
-    }
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>ToolNest - Professional PDF Export</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+            body { 
+              font-family: 'Inter', -apple-system, sans-serif; 
+              color: #000000 !important; 
+              background: #ffffff !important; 
+              padding: 50px; 
+              font-size: 14px;
+              line-height: 1.6;
+              max-width: 800px;
+              margin: 0 auto;
+            }
+            @media print {
+              @page { margin: 2cm; }
+              body { padding: 0; }
+              .no-print { display: none; }
+            }
+            h1 { font-size: 28px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; font-weight: bold; }
+            h2 { font-size: 22px; margin-top: 30px; margin-bottom: 15px; font-weight: bold; }
+            h3 { font-size: 18px; margin-top: 25px; font-weight: bold; }
+            p { margin-bottom: 15px; text-align: justify; }
+            pre { background: #f8f8f8; padding: 15px; border: 1px solid #eee; border-radius: 5px; font-family: monospace; font-size: 13px; margin: 20px 0; white-space: pre-wrap; }
+            code { background: #f8f8f8; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+            table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+            th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+            th { background: #f5f5f5; font-weight: bold; }
+            blockquote { border-left: 4px solid #ddd; padding-left: 15px; color: #666 !important; font-style: italic; margin: 20px 0; }
+            img { max-width: 100%; height: auto; }
+          </style>
+        </head>
+        <body>
+          <div class="no-print" style="position: fixed; top: 0; left: 0; right: 0; background: #3b82f6; color: white; padding: 10px; text-align: center; font-size: 12px; font-weight: bold; z-index: 9999;">
+            PREPARING PROFESSIONAL PDF... THE PRINT DIALOG WILL OPEN AUTOMATICALLY.
+          </div>
+          <div>
+            ${contentHtml.replace(/class="[^"]*"/g, '').replace(/style="[^"]*"/g, '')}
+          </div>
+          <script>
+            window.onload = function() {
+              setTimeout(() => {
+                window.print();
+              }, 500);
+            };
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
   };
 
   const downloadDoc = () => {
