@@ -52,6 +52,11 @@ const TOOL_CONFIG: Record<string, { icon: string; color: string; glow: string }>
     color: 'from-sky-500/20 to-blue-500/10 border-sky-500/30',
     glow: 'group-hover:shadow-[0_0_25px_rgba(14,165,233,0.2)]',
   },
+  mermaid: {
+    icon: `<rect x="9" y="2" width="6" height="6" rx="1" /><rect x="16" y="16" width="6" height="6" rx="1" /><rect x="2" y="16" width="6" height="6" rx="1" /><path d="M12 8v4" /><path d="M12 12H5v4" /><path d="M12 12h7v4" />`,
+    color: 'from-indigo-500/20 to-blue-500/10 border-indigo-500/30',
+    glow: 'group-hover:shadow-[0_0_25px_rgba(99,102,241,0.2)]',
+  },
 };
 
 export interface ToolCardProps {
